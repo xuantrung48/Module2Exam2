@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Cake>
+@{
+    var ctg = ViewBag.Category as Category;
+    ViewData["Title"] = "Danh sách bánh";
+}
+
+<h1 class="display-4">Danh sách @ctg.Name:</h1>
+<div class="text-left">
+    <a asp-controller="Home" asp-action="CreateCake" asp-route-CategoryId="@ViewBag.CategoryId" class="btn btn-primary mb-3 text-left"><i class="fa fa-plus"></i> Thêm bánh</a>
+</div>
+<div>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên bánh</th>
+                <th>Thành phần</th>
+                <th>HSD</th>
+                <th>NSX</th>
+                <th>Giá bán</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.CakeId</td>
+                <td>@item.Name</td>
+                <td>@item.Ingredient</td>
+                <td>@item.ExpiryDate.ToShortDateString()</td>
+                <td>@item.ManufacturingDate.ToShortDateString()</td>
+                <td>@item.Price.ToString("#,##0")  ₫</td>
+                <td>
+                    <a asp-controller="Home" asp-action="ViewCake" asp-route-id="@item.CakeId"><i class="far fa-eye"></i></a>
+                    <a asp-controller="Home" asp-action="EditCake" asp-route-id="@item.CakeId"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Trở về</a>
+

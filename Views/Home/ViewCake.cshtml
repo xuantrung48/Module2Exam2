@@ -1,0 +1,82 @@
+﻿@model Cake
+@{
+    var ctg = ViewBag.Category as Category;
+    ViewData["Title"] = "Danh sách bánh";
+}
+<h1 class="display-4">Chi tiết bánh:</h1>
+<div class="row">
+    <div class="col-6 text-right">
+        ID:
+    </div>
+    <div class="col-6">
+        @Model.CakeId
+    </div>
+    <div class="col-6 text-right">
+        Họ và tên:
+    </div>
+    <div class="col-6">
+        @Model.Name
+    </div>
+    <div class="col-6 text-right">
+        Thành phần:
+    </div>
+    <div class="col-6">
+        @Model.Ingredient
+    </div>
+    <div class="col-6 text-right">
+        Thể loại:
+    </div>
+    <div class="col-6">
+        @ctg.Name
+    </div>
+    <div class="col-6 text-right">
+        NSX:
+    </div>
+    <div class="col-6">
+        @Model.ManufacturingDate.ToShortDateString()
+    </div>
+    <div class="col-6 text-right">
+        HSD:
+    </div>
+    <div class="col-6">
+        @Model.ExpiryDate.ToShortDateString()
+    </div>
+    <div class="col-6 text-right">
+        Giá bán:
+    </div>
+    <div class="col-6">
+        @Model.Price.ToString("#,##0")  ₫
+    </div>
+    <div class="mx-auto d-block">
+        <a asp-controller="Home" asp-action="EditCake" asp-route-id="@Model.CakeId" class="btn btn-warning">Chỉnh sửa</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            Xoá
+        </button>
+        <a asp-controller="Home" asp-action="Category" asp-route-id="@Model.CategoryId" class="btn btn-secondary">Trở về</a>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Xoá bánh</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Xoá bánh?
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <a type="button" class="btn btn-danger" asp-controller="Home" asp-action="RemoveCake" asp-route-id="@Model.CakeId">Xoá</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+            </div>
+
+        </div>
+    </div>
+</div>

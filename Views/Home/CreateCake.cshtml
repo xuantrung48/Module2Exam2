@@ -1,0 +1,95 @@
+﻿@model CakeViewModel
+
+@{
+    ViewData["Title"] = "Tạo bánh";
+    var categories = ViewBag.Categories as IEnumerable<Category>;
+    var categoryId = ViewBag.CategoryId as int?;
+}
+<h1 class="display-4">@ViewData["Title"]</h1>
+<form asp-controller="Home" asp-action="CreateCake" method="post">
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="Name">Tên bánh: </label>
+        </div>
+        <div class="col-md-9">
+            <input asp-for="Name" class="form-control" placeholder="Bánh ngọt ABC">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="Ingredient">Thành phần: </label>
+        </div>
+        <div class="col-md-9">
+            <input asp-for="Ingredient" class="form-control" placeholder="Bột mì, đường, sữa...">
+            <span asp-validation-for="Ingredient" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="ManufacturingDate">NSX: </label>
+        </div>
+        <div class="col-md-9">
+            <input asp-for="ManufacturingDate" class="form-control" type="date">
+            <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="ExpiryDate">HSD: </label>
+        </div>
+        <div class="col-md-9">
+            <input asp-for="ExpiryDate" class="form-control" type="date">
+            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="Price">Giá bán (₫): </label>
+        </div>
+        <div class="col-md-9">
+            <input asp-for="Price" class="form-control" placeholder="5000">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label asp-for="CategoryId">Thể loại: </label>
+        </div>
+        <div class="col-md-9">
+            <select asp-for="CategoryId" class="custom-select">
+                <option value="">Chọn thể loại</option>
+                @if (categories.Any() && categories.Count() > 0)
+                {
+                    foreach (var ctg in categories)
+                    {
+                        @if (categoryId != null && ctg.CategoryId == categoryId)
+                        {
+                            <option value="@ctg.CategoryId" selected>@ctg.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@ctg.CategoryId">@ctg.Name</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-9">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            @if (categoryId != null)
+            {
+                <a asp-controller="Home" asp-action="Category" asp-route-id="@categoryId" class="btn btn-secondary mx-3">Huỷ</a>
+            }
+            else
+            {
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mx-3">Huỷ</a>
+            }
+        </div>
+    </div>
+</form>
